@@ -14,7 +14,7 @@ function avatardatabase_info()
         "description"	=> "In diesen Plugin kannst du Vorschläge für Avatare einspeichern, sowie ihren Jahrgang, ihre Herkunft und welches Geschlecht sie haben. 
         Du hast du die Möglichkeit sowohl für weiblich, männlich und divers oder nur weiblich und männlich anzeigen zu lassen. 
         Zudem hat der User die Möglichkeit nach bestimmten Punkten zu filtern.",
-        "website"		=> "https://github.com/Ales12",
+        "website"		=> "https://github.com/Ales12/avatardatabase",
         "author"		=> "Ales",
         "authorsite"	=> "https://github.com/Ales12",
         "version"		=> "1.0",
