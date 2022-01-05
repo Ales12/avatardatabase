@@ -123,7 +123,7 @@ function avatardatabase_install()
 	<td valign="top" align="center">
 		<form id="filter_db" method="get" action="misc.php?action=avatardatabase">
 			<input type="hidden" name="action" id="action" value="avatardatabase" class="textbox"  /> 
-		<table>
+		<table width="70%">
 			<tr><td class="thead" colspan="3"><strong>{$lang->adb_filter}</strong></td>
 			</tr>
 			<tr>
@@ -580,9 +580,9 @@ function avatardatabase_misc()
 
             $delete = "<a href='misc.php?action=avatardatabase&avatar_delete={$adb_id}'><i class=\"fas fa-trash-alt\" title='Avatar löschen'></i></a>";
 
-            $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
-
-
+     if($mybb->usergroup['canmodcp'] == 1){
+                $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
+            }
 
             if($row['gender'] == 1){
                 eval("\$female .= \"" . $templates->get("avatardatabase_suggestions") . "\";");
