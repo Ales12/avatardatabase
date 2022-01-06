@@ -616,7 +616,7 @@ function avatardatabase_misc()
             }
 
 
-
+  if($mybb->usergroup['canmodcp'] == 1) {
             $edit = "<a onclick=\"$('#edit_{$adb_id}').modal({ fadeDuration: 250, keepelement: true, zIndex: (typeof modal_zindex !== 'undefined' ? modal_zindex : 9999) }); return false;\" style=\"cursor: pointer;\"><i class=\"fa fa-edit\" aria-hidden=\"true\" title='Avatar editieren'></i></a>";
 
             eval("\$edit_adb = \"" . $templates->get ("avatardatabase_edit") . "\";");
@@ -624,7 +624,7 @@ function avatardatabase_misc()
             $delete = "<a href='misc.php?action=avatardatabase&avatar_delete={$adb_id}'><i class=\"fas fa-trash-alt\" title='Avatar löschen'></i></a>";
 
 
-            if($mybb->usergroup['modcp'] == 1) {
+          
                 $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
             }
 
