@@ -14,7 +14,7 @@ function avatardatabase_info()
         "description"	=> "In diesen Plugin kannst du Vorschläge für Avatare einspeichern, sowie ihren Jahrgang, ihre Herkunft und welches Geschlecht sie haben. 
         Du hast du die Möglichkeit sowohl für weiblich, männlich und divers oder nur weiblich und männlich anzeigen zu lassen. 
         Zudem hat der User die Möglichkeit nach bestimmten Punkten zu filtern.",
-        "website"		=> "https://github.com/Ales12/avatardatabase",
+        "website"		=> "https://github.com/Ales12",
         "author"		=> "Ales",
         "authorsite"	=> "https://github.com/Ales12",
         "version"		=> "1.0",
@@ -110,7 +110,7 @@ function avatardatabase_install()
 </head>
 <body>
 {$header}
-<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace}\']}" class="tborder">
+<table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
 <tr>
 	<td class="thead"><strong>{$lang->adb_main}</strong></td>
 </tr>
@@ -123,13 +123,14 @@ function avatardatabase_install()
 	<td valign="top" align="center">
 		<form id="filter_db" method="get" action="misc.php?action=avatardatabase">
 			<input type="hidden" name="action" id="action" value="avatardatabase" class="textbox"  /> 
-		<table width="70%">
-			<tr><td class="thead" colspan="3"><strong>{$lang->adb_filter}</strong></td>
+		<table>
+			<tr><td class="thead" colspan="4"><strong>{$lang->adb_filter}</strong></td>
 			</tr>
 			<tr>
 				<td class="tcat"><strong>{$lang->adb_initial_filter}</strong></td>
 				<td class="tcat"><strong>{$lang->adb_year_filter}</strong></td>
 				<td class="tcat"><strong>{$lang->adb_origin_filter}</strong></td>
+					<td class="tcat"><strong>{$lang->adb_hair_filter}</strong></td>
 			</tr>
 			<tr>
 				<td class="trow1">
@@ -150,6 +151,18 @@ function avatardatabase_install()
 					{$origin_bit}
 					</select>
 				</td>
+								<td class="trow2">
+					<select name="hair">
+							<option value="%">{$lang->adb_initial_all}</option>
+						<option value="rothaarig">Rothaarig</option>
+						<option value="blond">Blond</option>
+						<option value="brünett">Brünett</option>
+						<option value="bunt">Bunt</option>
+						<optione value="Glatze">Glatze</option>
+						<optione value="weiß">Weiß</option>
+							<optione value="schwarz">Schwarz</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td class="trow1" colspan="3" align="center">
@@ -158,6 +171,8 @@ function avatardatabase_install()
 			</tr>
 	</table>
 		</form><br /> <br />
+		<h1>Aktuell sind {$count_female} weibliche, {$count_male} männliche und {$count_divers} diverse Avatarpersonen eingetragen</h1>
+		<br />
 		{$adb_table}
 	</td>
 	</tr>	
@@ -195,11 +210,14 @@ function avatardatabase_install()
 			<input type="text" name="origin" id="origin" value="{$row[\'origin\']}" class="textbox" required/> 
 				</td>
 			</tr>
-									<tr><td class="tcat" colspan="2"><strong>{$lang->adb_link}</strong></td></tr>
+									<tr>		<td class="tcat"><strong>{$lang->adb_hair}</strong></td>
+									<td class="tcat"><strong>{$lang->adb_link}</strong></td></tr>
 			<tr>
 
-							<tr>
-								<td class="trow1" colspan="2"><input type="text" name="link" id="link" value="{$row[\'link\']}" class="textbox"   style="width: 90%; margin: auto;"/> 
+							<tr><td class="trow1">
+			<input type="text" name="hair" id="hair" value="{$row[\'hair\']}" class="textbox" required/> 
+				</td>
+		<td class="trow2"><input type="text" name="link" id="link" value="{$row[\'link\']}" class="textbox" /> 
 				</td>
 			</tr>
 			<tr><td class="trow1" colspan="2" align="center"><input type="submit" name="edit_avasuggestion" value="{$lang->adb_edit}" id="submit" class="button"></td></tr>
@@ -236,11 +254,16 @@ function avatardatabase_install()
 			<input type="text" name="origin" id="origin" placeholder="britisch" class="textbox" required/> 
 				</td>
 			</tr>
-									<tr><td class="tcat" colspan="2"><strong>{$lang->adb_link}</strong></td></tr>
+									<tr>
+										<td class="tcat"><strong>{$lang->adb_hair}</strong></td>
+									<td class="tcat"><strong>{$lang->adb_link}</strong></td>
+									</tr>
 			<tr>
 
-							<tr>
-								<td class="trow1" colspan="2"><input type="text" name="link" id="link" placeholder="https://" class="textbox"   style="width: 80%; margin: auto;"/> 
+							<tr>		<td class="trow1">
+			<input type="text" name="hair" id="haar" placeholder="brünett" class="textbox" required/> 
+				</td>
+								<td class="trow2" colspan="2"><input type="text" name="link" id="link" placeholder="https://" class="textbox" /> 
 				</td>
 			</tr>
 			<tr><td class="trow1" colspan="2" align="center"><input type="submit" name="add_avasuggestion" value="{$lang->adb_add}" id="submit" class="button"></td></tr>
@@ -384,7 +407,7 @@ $plugins->add_hook('misc_start', 'avatardatabase_misc');
 // In the body of your plugin
 function avatardatabase_misc()
 {
-    global $mybb, $db, $templates, $lang, $header, $headerinclude, $footer, $divers, $formular, $female, $male, $diverse, $claimname, $year, $origin, $link, $edit;
+    global $mybb, $db, $templates, $lang, $header, $headerinclude, $footer, $divers, $formular, $female, $male, $diverse, $claimname, $year, $origin, $link, $edit, $hair;
     $lang->load('avatardatabase');
 
     if($mybb->get_input('action') == 'avatardatabase')
@@ -414,6 +437,7 @@ function avatardatabase_misc()
             $gender = $_POST['gender'];
             $origin = $_POST['origin'];
             $year = $_POST['year'];
+            $hair = $_POST['hair'];
             $link = $_POST['link'];
 
             $new_record = array(
@@ -421,6 +445,7 @@ function avatardatabase_misc()
                 "gender" => (int)$gender,
                 "origin" => $db->escape_string($origin),
                 "year" => (int)$year,
+                "hair" => $db->escape_string($hair),
                 "link" => $db->escape_string($link),
             );
 
@@ -447,6 +472,11 @@ function avatardatabase_misc()
                 $origin_filter = "%";
             }
 
+        $hair_filter = $mybb->input['hair'];
+        if(empty($hair_filter)){
+            $hair_filter = "%";
+        }
+
 
         $alphabet = range('A', 'Z');
         foreach($alphabet as $alphabetletter) {
@@ -457,6 +487,7 @@ function avatardatabase_misc()
             $letter_bit .= "<option value=\"{$alphabetletter}\" {$selected}>{$alphabetletter}</option>";
         }
 
+        // lese alle Jahre aus
         $year_select = $db->query("SELECT DISTINCT year
         FROM ".TABLE_PREFIX."avatardatabase
         order by year ASC
@@ -478,6 +509,7 @@ function avatardatabase_misc()
         }
 
 
+        // lese alle Herkünfte aus
         $origin_select = $db->query("SELECT DISTINCT origin
         FROM ".TABLE_PREFIX."avatardatabase
         order by origin ASC
@@ -498,6 +530,11 @@ function avatardatabase_misc()
             $origin_bit.= "<option value=\"{$origins}\" {$selected}>{$origins}</option>";
         }
 
+        // variabeln
+
+        $count_female = 0;
+        $count_male = 0;
+        $count_divers = 0;
 
         // Geben wir die Datenbank mal aus
 
@@ -506,6 +543,7 @@ function avatardatabase_misc()
         WHERE claimname like '".$letter."%'
         and year like '".$year_filter."'
         and origin like '".$origin_filter."'
+        and hair like '%$hair_filter%'
         ORDER BY claimname ASC
         ");
 
@@ -517,8 +555,10 @@ function avatardatabase_misc()
             $claimname = "";
             $origin = "";
             $year = 0;
+            $hair = "";
             $options = "";
             $gender = 0;
+            $gender_bit = "";
 
             // ID des Eintrags
             $adb_id = $row['adb_id'];
@@ -528,8 +568,10 @@ function avatardatabase_misc()
             $origin = $row['origin'];
             $year = $row['year'];
             $gender = $row['gender'];
+            $hair = $row['hair'];
+
             if(!empty($row['link'])){
-                $link = "<a href='{$row['link']}' target='_blank'><i class=\"fas fa-location-arrow\"></i></a>";
+                $link = "<a href='{$row['link']}' target='_blank' title='Link zur Galerie'><i class=\"fas fa-location-arrow\"></i></a>";
             }
 
             // Kontrolliere, ob das Avatar schon vergeben ist. Wenn ja, streich es durch!
@@ -580,15 +622,18 @@ function avatardatabase_misc()
 
             $delete = "<a href='misc.php?action=avatardatabase&avatar_delete={$adb_id}'><i class=\"fas fa-trash-alt\" title='Avatar löschen'></i></a>";
 
-     if($mybb->usergroup['canmodcp'] == 1){
-                $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
-            }
+            $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
+
+
 
             if($row['gender'] == 1){
+                $count_female++;
                 eval("\$female .= \"" . $templates->get("avatardatabase_suggestions") . "\";");
             } elseif($row['gender'] == 2){
+                $count_male++;
                 eval("\$male .= \"" . $templates->get("avatardatabase_suggestions") . "\";");
             }elseif($row['gender'] == 3){
+                $count_divers++;
                 eval("\$diverse .= \"" . $templates->get("avatardatabase_suggestions") . "\";");
             }
 
@@ -605,12 +650,13 @@ function avatardatabase_misc()
             $adb_id = $_POST['adb_id'];
             $claim  = $_POST['claim'];
             $gender = $_POST['gender'];
+            $hair = $_POST['hair'];
             $origin = $_POST['origin'];
             $year = $_POST['year'];
             $link = $_POST['link'];
 
 
-            $db->query("UPDATE ".TABLE_PREFIX."avatardatabase SET claimname ='".$claim."', gender = '".$gender."', origin = '".$origin."', year = '".$year."',  link = '".$link."' WHERE adb_id = '".$adb_id."'");
+            $db->query("UPDATE ".TABLE_PREFIX."avatardatabase SET claimname ='".$claim."', gender = '".$gender."', origin = '".$origin."', year = '".$year."',  link = '".$link."', hair = '".$hair."' WHERE adb_id = '".$adb_id."'");
             redirect("misc.php?action=avatardatabase");
         }
 
