@@ -623,7 +623,10 @@ function avatardatabase_misc()
 
             $delete = "<a href='misc.php?action=avatardatabase&avatar_delete={$adb_id}'><i class=\"fas fa-trash-alt\" title='Avatar löschen'></i></a>";
 
-            $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
+
+            if($mybb->usergroup['modcp'] == 1) {
+                $options = "{$edit}<div class=\"modal\" id=\"edit_{$adb_id}\" style=\"display: none;\">{$edit_adb}</div> {$delete}";
+            }
 
 
 
