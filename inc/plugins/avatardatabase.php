@@ -38,6 +38,7 @@ function avatardatabase_install()
           `gender` int(10)NOT NULL,
            `year` int(100) NOT NULL,
            `origin` varchar(500) CHARACTER SET utf8  NOT NULL,
+	    `hair` varchar(500) CHARACTER SET utf8  NOT NULL,
            `link` varchar(500) CHARACTER SET utf8  NOT NULL,
           PRIMARY KEY (`adb_id`)
         ) ENGINE=MyISAM".$db->build_create_table_collation());
