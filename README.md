@@ -3,6 +3,9 @@
 Dieser Plugin ermöglicht es eine eigene Avatardatenbank zu führen. Hierzu können die Informationen *Geschlecht, Jahrgang, Haarfarbe und Herkunft* angegeben werden. Zudem haben die User die Möglichkeit einen Link zu einer  Galerie anzugeben. <br />
 Bearbeiten kann es nur das Team! Schon vergebene Avatare werden durchgestrichen!
 
+## muss vorhanden sein
+fontawesome
+
 ## Link
 forenlink/misc.php?action=avatardatabase
 
